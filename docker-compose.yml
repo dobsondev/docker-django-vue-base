@@ -1,0 +1,58 @@
+version: "3"
+services:
+
+  # Django
+  django:
+    build: .
+    command: bash -c "pip install -r requirements.txt && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/var/www
+    ports:
+      - "8000:8000"
+    environment:
+      MYSQL_DATABASE: docker
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: docker
+      MYSQL_ROOT_PASSWORD: root
+    depends_on:
+      - database
+
+  # phpMyAdmin for MariaDB
+  database_pma:
+    image: phpmyadmin/phpmyadmin:latest
+    ports:
+      - 5555:80
+    environment:
+      PMA_HOST: database
+      PMA_USER: docker
+      PMA_PASSWORD: docker
+    depends_on:
+      - database
+
+  # MariaDB
+  database:
+    image: mariadb:10.3.22
+    environment:
+      MYSQL_DATABASE: docker
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: docker
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./docker/local-dev/mariadb/data:/docker-entrypoint-initdb.d
+
+  # Mailhog mail catcher.
+  mailhog:
+    image: mailhog/mailhog:latest
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    depends_on:
+      - django
+
+volumes:
+  dbdata:
+  node_modules:
+    driver: local
