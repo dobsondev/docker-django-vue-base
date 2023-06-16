@@ -4,7 +4,7 @@ services:
   # Django
   django:
     build: .
-    command: bash -c "pip install -r requirements.txt && python manage.py runserver 0.0.0.0:8000"
+    command: bash -c "pip install -r requirements.txt && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./django:/var/www
     ports:
@@ -18,7 +18,7 @@ services:
       - database
 
   # phpMyAdmin for MariaDB
-  database_pma:
+  phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     ports:
       - 5555:80
@@ -67,5 +67,3 @@ services:
 
 volumes:
   dbdata:
-  node_modules:
-    driver: local
