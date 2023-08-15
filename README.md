@@ -27,13 +27,29 @@ Run the following command _after_ the containers are running on your local:
 docker compose exec django python manage.py createsuperuser
 ```
 
-### Creating a new Django app
+### Migrations
+
+Run the following command _after_ the containers are running on your local to perform a migration:
+
+```
+docker compose exec django python manage.py migrate
+```
+
+To make migrations:
+
+```
+docker compose exec django python manage.py makemigrations
+```
+
+### Creating a new Django Project
 
 Run the following command before you spin up the containers:
 
 ```
 docker compose run django django-admin startproject <project-name> .
 ```
+
+This will create a new Django Project (note: not a new Django Application - see [Django Applications](https://docs.djangoproject.com/en/3.2/ref/applications/)).
 
 ### Exporting the database
 
@@ -49,9 +65,21 @@ MariaDB can read in gzipped database files. To gzip the database file run the fo
 gzip docker/local-dev/mariadb/data/database.sql
 ```
 
+### Helpful Documentation Links for Django
+
+- [Django 3.2 Documentation Site](https://docs.djangoproject.com/en/3.2/)
+- [Django Applications](https://docs.djangoproject.com/en/3.2/ref/applications/)
+- [djoser (REST Authentication Library)](https://djoser.readthedocs.io/en/latest/getting_started.html)
+- [djoser Authentication Backends](https://djoser.readthedocs.io/en/latest/authentication_backends.html)
+
 ## VueJS
 
 The VueJS application will be located at [http://localhost:8080](http://localhost:8080)
+
+### Helpful Documentation Links for VueJS
+
+- [VueJS Documentation Site](https://vuejs.org/guide/introduction.html)
+- [Pinia (Vuex Store Replacement)](https://pinia.vuejs.org/)
 
 ## Mailhog
 
@@ -65,6 +93,8 @@ MailHog is an email testing tool for developers:
 
 For more information, please see the [Mailhog GitHub repository](https://github.com/mailhog/MailHog).
 
-## References
+## Helpful YouTube Tutorials
 
-- [Extremely helpful video on quick setup for Django and VueJS authentication](https://www.youtube.com/watch?v=XEZB-XbwihA)
+- [Monkhaus - Django & VueJS Basic Token Authentication in LESS than 30 Mins. ( Linux )](https://www.youtube.com/watch?v=XEZB-XbwihA)
+- [Traversy Media - VueJS Crash Course](https://www.youtube.com/watch?v=qZXt1Aom3Cs)
+- [Traversy Media - Vuex Crash Course | State Management](https://www.youtube.com/watch?v=5lVQgZzLMHc)
